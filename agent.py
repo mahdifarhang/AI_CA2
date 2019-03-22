@@ -1,5 +1,3 @@
-
-
 INFINITY = 10000
 
 class Agent:
@@ -8,29 +6,26 @@ class Agent:
         self.opponentColor = opponentColor
         self.height = height
 
-
     def move(self, board):
         before = board.travelOverBoard(self.color)
         val, from_cell, to_cell = minimax(board, 0, self.height, True, self.color, self.opponentColor, -INFINITY, INFINITY)
         after = board.travelOverBoard(self.color)
         print(val)
+        input()
         return from_cell, to_cell
-
 
 def distances(board, color):
     pieces = board.travelOverBoard(color)
     result = 0
     for piece in pieces:
         if (color == 'W'):
-            result += (piece[0] + 1) * (piece[0] + 1)
+            result += (piece[0] + 0) * (piece[0] + 0)
         else:
-            result += (6 - piece[0]) * (6 - piece[0])
+            result += (board.n_rows - piece[0]) * (board.n_rows - piece[0])
     return result
 
-
 def eval_func(board, color, enemy_color):
-    return distances(board, enemy_color) - distances(board, color)
-
+    return (distances(board, enemy_color) - distances(board, color))
 
 def minimax(board, depth, height, is_maximizer, color, enemy_color, alpha, beta):
     from_ = (-1, -1)
