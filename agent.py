@@ -7,22 +7,20 @@ class Agent:
         self.height = height
 
     def move(self, board):
-        before = board.travelOverBoard(self.color)
         val, from_cell, to_cell = minimax(board, 0, self.height, True, self.color, self.opponentColor, -INFINITY, INFINITY)
-        after = board.travelOverBoard(self.color)
-        print(val)
-        input()
         return from_cell, to_cell
 
 def distances(board, color):
-    pieces = board.travelOverBoard(color)
     result = 0
-    for piece in pieces:
-        if (color == 'W'):
-            result += (piece[0] + 0) * (piece[0] + 0)
-        else:
-            result += (board.n_rows - piece[0]) * (board.n_rows - piece[0])
+    for i in range(board.n_rows):
+        for j in range(board.n_cols):
+            if (board.board[i][j] == color):
+                if (color == 'W'):
+                    result = ((i + 1) * (i + 1)) + result
+                else:
+                    result = ((6 - i) * (6 - i)) + result
     return result
+
 
 def eval_func(board, color, enemy_color):
     return (distances(board, enemy_color) - distances(board, color))
